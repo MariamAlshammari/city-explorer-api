@@ -14,14 +14,15 @@ const server=express();
 const PORT = process.env.PORT;
 server.use(cors());
 
+server.get('/weather',weatherData);
 
-server.get('/',(req,res)=>{
-    // res.status(200).send(weatherData)
-    res.status(200).send('home route')
+// server.get('/',(req,res)=>{
+//     // res.status(200).send(weatherData)
+//     res.status(200).send('home route')
     
 
 
-})
+// })
 
 
 server.get('/test',(request,response)=>{
@@ -32,6 +33,7 @@ server.get('/test',(request,response)=>{
 server.get('/weather',(req,res)=>{
     // console.log(req.query);
     try{
+        let findWeather=()=>{
     let selectedCity = weatherData.find (city =>{
         if(city.city_name== req.query.locationQuery && city.lon==req.query.lon && city.lat== req.query.lat) {
             return city
@@ -44,10 +46,12 @@ server.get('/weather',(req,res)=>{
          // console.log(cityWeatherProp);
          return new ForeCast(item.valid_date,item.weather.description);
  
-     })
+     })}
     //  console.log(cityWeatherProp);
+    res.json( findWeather())
 
-     res.status(200).send(cityWeatherProp); }
+    //  res.status(200).send(cityWeatherProp); 
+    }
      catch(err){
         res.status(500)
         res.send(err.message)
@@ -57,7 +61,7 @@ server.get('/weather',(req,res)=>{
  
         
     
-})
+});
 
 server.get('*',(req,res)=>{
     res.status(404).send('NOT FOUND')
