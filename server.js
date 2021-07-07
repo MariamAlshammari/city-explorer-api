@@ -1,5 +1,5 @@
 'use strict';
-const weatherData = require('./data/weather.json');
+// const weatherData = require('./data/weather.json');
 
 const express = require("express");
 const cors = require('cors');
